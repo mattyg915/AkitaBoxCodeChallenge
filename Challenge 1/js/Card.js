@@ -1,61 +1,92 @@
 class Card {
 
     /**
+     * Class properties suit and value
+     */
+    #suit;
+    #val;
+
+    /**
      * basic constructor
      * @param suit the suit of the card as an int, 1=Clubs, 2=Diamonds, 3=Hearts, 4=Spades
      * @param val the value of the card as an int
      */
     constructor(suit, val) {
 
-        switch (suit) {
-            case 1:
-                this._suit = "C";
-                break;
-            case 2:
-                this._suit = "D";
-                break;
-            case 3:
-                this._suit = "H";
-                break;
-            case 4:
-                this._suit = "S";
-                break;
-            default:
-                // TODO: throw an error
-                break;
-        }
-
-        switch (val) {
-            case 1:
-                this._val = "A";
-                break;
-            case val < 11:
-                this._val = val;
-                break;
-            case 11:
-                this._val = "J";
-                break;
-            case 12:
-                this._val = "Q";
-                break;
-            case 13:
-                this._val = "K";
-                break;
-            default:
-                // TODO: throw an error
-                break;
-        }
+        this.#suit = suit;
+        this.#val = val;
     }
 
     get suit() {
-        return this._suit;
+        return this.#suit;
     }
     get val() {
-        return this._val;
+        return this.#val;
     }
 
+    /**
+     * Compares this Card with another (suit is not considered)
+     * @param first the first card to compare
+     * @param second the second car to compare
+     * @return int, -1 if first card is less than second, 0 if they are equal,
+     *  1 if first card is greater
+     */
+    static compare(first, second) {
+        if (first.val() > second.val()) {
+            return 1;
+        }
+        else if (first.val() < second.val()) {
+            return -1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    /**
+     * @returns A string in the format [suit][value]
+     */
     toString() {
-        return this.suit + this.val;
+        let result = "";
+        switch (this.suit()) {
+            case 1:
+                result += "C";
+                break;
+            case 2:
+                result += "D";
+                break;
+            case 3:
+                result += "H";
+                break;
+            case 4:
+                result += "S";
+                break;
+            default:
+                result += "Error, suit undefined. ";
+                break;
+        }
+
+        switch (this.val()) {
+            case 1:
+                result += "A";
+                break;
+            case this.val() < 11:
+                result += this.val();
+                break;
+            case 11:
+                result += "J";
+                break;
+            case 12:
+                result += "Q";
+                break;
+            case 13:
+                result += "K";
+                break;
+            default:
+                result += "Error, card value is undefined."
+                break;
+        }
+        return result;
     }
 
 }
