@@ -12,7 +12,6 @@ class Card {
      * @param val the value of the card as an int
      */
     constructor(suit, val) {
-
         this.#suit = suit;
         this.#val = val;
     }
@@ -44,7 +43,7 @@ class Card {
     }
 
     /**
-     * @returns A string in the format [suit][value]
+     * @returns string in the format [suit][value]
      */
     toString() {
         let result = "";
@@ -67,9 +66,6 @@ class Card {
         }
 
         switch (this.val()) {
-            case 1:
-                result += "A";
-                break;
             case this.val() < 11:
                 result += this.val();
                 break;
@@ -82,8 +78,11 @@ class Card {
             case 13:
                 result += "K";
                 break;
+            case 14:
+                result += "A";
+                break;
             default:
-                result += "Error, card value is undefined."
+                result += "Error, card value is undefined.";
                 break;
         }
         return result;

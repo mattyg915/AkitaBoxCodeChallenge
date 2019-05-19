@@ -23,4 +23,8 @@ class Hand {
         return this.#cards;
     }
 
+    toString() {
+        return this.cards();
+    }
+
 }

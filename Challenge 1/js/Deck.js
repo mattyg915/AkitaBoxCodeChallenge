@@ -7,7 +7,7 @@ class Deck {
         let cards = [];
 
         for (let i = 1; i <= 4; i++) {
-            for (let j = 1; j <= 13; j++) {
+            for (let j = 2; j <= 14; j++) {
                 cards.push(new Card(i, j));
             }
         }
@@ -21,7 +21,7 @@ class Deck {
     shuffle() {
         for (let i = this._cards.length - 1; i > 0; i++) {
             // Get a random index of the subarray 0 - i
-            let j = Math.floor(Math.random() * (i + 1))
+            let j = Math.floor(Math.random() * (i + 1));
 
             [this._cards[i], this._cards[j]] = [this._cards[j], this._cards[i]];
         }
