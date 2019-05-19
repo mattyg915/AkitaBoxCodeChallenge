@@ -4,23 +4,23 @@ class Card {
      * Class properties suit and value
      */
     #suit;
-    #val;
+    #face;
 
     /**
      * basic constructor
      * @param suit the suit of the card as an int, 1=Clubs, 2=Diamonds, 3=Hearts, 4=Spades
-     * @param val the value of the card as an int
+     * @param face the value of the card as an int
      */
-    constructor(suit, val) {
+    constructor(suit, face) {
         this.#suit = suit;
-        this.#val = val;
+        this.#face = face;
     }
 
     get suit() {
         return this.#suit;
     }
-    get val() {
-        return this.#val;
+    get face() {
+        return this.#face;
     }
 
     /**
@@ -31,10 +31,10 @@ class Card {
      *  1 if first card is greater
      */
     static compare(first, second) {
-        if (first.val() > second.val()) {
+        if (first.face() > second.face()) {
             return 1;
         }
-        else if (first.val() < second.val()) {
+        else if (first.face() < second.face()) {
             return -1;
         }
         else {
@@ -43,48 +43,51 @@ class Card {
     }
 
     /**
-     * @returns string in the format [suit][value]
+     * @returns string in the format [suit][face]
      */
     toString() {
         let result = "";
+
+        switch (this.face()) {
+            case this.face() < 11:
+                result += this.face() + " of ";
+                break;
+            case 11:
+                result += "Jack of ";
+                break;
+            case 12:
+                result += "Queen of ";
+                break;
+            case 13:
+                result += "King of ";
+                break;
+            case 14:
+                result += "Ace of ";
+                break;
+            default:
+                result += "Error, card value is undefined.";
+                break;
+        }
+
         switch (this.suit()) {
             case 1:
-                result += "C";
+                result += "Clubs";
                 break;
             case 2:
-                result += "D";
+                result += "Diamonds";
                 break;
             case 3:
-                result += "H";
+                result += "Hearts";
                 break;
             case 4:
-                result += "S";
+                result += "Spades";
                 break;
             default:
                 result += "Error, suit undefined. ";
                 break;
         }
 
-        switch (this.val()) {
-            case this.val() < 11:
-                result += this.val();
-                break;
-            case 11:
-                result += "J";
-                break;
-            case 12:
-                result += "Q";
-                break;
-            case 13:
-                result += "K";
-                break;
-            case 14:
-                result += "A";
-                break;
-            default:
-                result += "Error, card value is undefined.";
-                break;
-        }
+
         return result;
     }
 
