@@ -13,7 +13,20 @@ function manualTests() {
         return;
     }
 
-    handResult.innerText = hand.toString();
+    hand.sort();
+
+    let cards = hand.toString();
+
+    cards = cards.split(" | ");
+
+    let i = 1;
+    cards.forEach(card => {
+        card = card.split(" of ");
+        let fileName = "../cards/" + card[0] + card[1] + ".png";
+        let imgElement = document.getElementById("card" + i);
+        imgElement.src = fileName;
+        i++;
+    });
 
     let rank = hand.evaluate();
 
@@ -25,13 +38,25 @@ function manualTests() {
  */
 function randomTests() {
     let deck = new Deck();
-    let handResult = document.getElementById("hand");
     let rankScore = document.getElementById("result");
 
     deck.shuffle();
     let hand = deck.deal(5);
 
-    handResult.innerText = hand.toString();
+    hand.sort();
+
+    let cards = hand.toString();
+
+    cards = cards.split(" | ");
+
+    let i = 1;
+    cards.forEach(card => {
+        card = card.split(" of ");
+        let fileName = "../cards/" + card[0] + card[1] + ".png";
+        let imgElement = document.getElementById("card" + i);
+        imgElement.src = fileName;
+        i++;
+    });
 
     let rank = hand.evaluate();
 
@@ -49,6 +74,8 @@ function consoleOnlyTests(handInput) {
         console.log("Invalid input");
         return;
     }
+
+    hand.sort();
 
     console.log("Cards in your hand: " + hand.toString() + "\n");
 
