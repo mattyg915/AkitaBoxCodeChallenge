@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Poker Hand</title>
-</head>
-<body>
-    <h1>Select </h1>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Poker Hand</title>
+    </head>
+    <body>
+        <h1>Enter a hand of cards in the field below</h1>
+        Use the following format (and be sure to only enter 5 cards separated by spaces): {face}{suit}
+        <br><br>Where the characters C, D, H, and S represent the suits Clubs, Diamonds, Hearts, and Spades
+        <br>Card faces are represented by A, K, Q, or J for Ace, King, Queen, or Jack, or simply the number of the card
+        <br><br> Example: 6d 3h 10s 2c 6h <br><br>
+        <label for="cardInput">Cards:</label>
+        <input id="cardInput" type="text">
+
+        <button type="button" onclick="manualTests()">Use this hand!</button>
+
+        <br><br>
+
+        <button type="button" onclick="randomTests()">Random hand!</button>
+
+        <br><br><div id="hand"></div><br>
+        <div id="result"></div>
+
+    </body>
+    <script type="text/javascript" src="../js/Card.js"></script>
+    <script type="text/javascript" src="../js/Hand.js"></script>
+    <script type="text/javascript" src="../js/Deck.js"></script>
+    <script type="text/javascript" src="../js/testing.js"></script>
 </html>

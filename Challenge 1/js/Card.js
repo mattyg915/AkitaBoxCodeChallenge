@@ -1,26 +1,20 @@
 class Card {
 
     /**
-     * Class properties suit and value
-     */
-    #suit;
-    #face;
-
-    /**
      * basic constructor
      * @param suit the suit of the card as an int, 1=Clubs, 2=Diamonds, 3=Hearts, 4=Spades
      * @param face the value of the card as an int
      */
     constructor(suit, face) {
-        this.#suit = suit;
-        this.#face = face;
+        this._suit = suit;
+        this._face = face;
     }
 
     get suit() {
-        return this.#suit;
+        return this._suit;
     }
     get face() {
-        return this.#face;
+        return this._face;
     }
 
     /**
@@ -31,14 +25,32 @@ class Card {
      *  1 if first card is greater
      */
     static compare(first, second) {
-        if (first.face() > second.face()) {
+        if (first._face > second._face) {
             return 1;
         }
-        else if (first.face() < second.face()) {
+        else if (first._face < second._face) {
             return -1;
         }
         else {
             return 0;
+        }
+    }
+
+    /**
+     * Takes the int value of a card and returns its proper term, e.g. 11 = Jack
+     */
+    static translate(face) {
+        switch (face) {
+            case 11:
+                return "Jack";
+            case 12:
+                return "Queen";
+            case 13:
+                return "King";
+            case 14:
+                return "Ace";
+            default:
+                return face;
         }
     }
 
@@ -48,10 +60,7 @@ class Card {
     toString() {
         let result = "";
 
-        switch (this.face()) {
-            case this.face() < 11:
-                result += this.face() + " of ";
-                break;
+        switch (this._face) {
             case 11:
                 result += "Jack of ";
                 break;
@@ -65,11 +74,11 @@ class Card {
                 result += "Ace of ";
                 break;
             default:
-                result += "Error, card value is undefined.";
+                result += this._face + " of ";
                 break;
         }
 
-        switch (this.suit()) {
+        switch (this._suit) {
             case 1:
                 result += "Clubs";
                 break;
@@ -81,9 +90,6 @@ class Card {
                 break;
             case 4:
                 result += "Spades";
-                break;
-            default:
-                result += "Error, suit undefined. ";
                 break;
         }
 

@@ -1,30 +1,31 @@
 class Hand {
 
-    /**
-     * Class property cards is an array of Card objects
-     */
-    #cards = [];
+    constructor() {
+        this._cards = [];
+    }
 
     /**
      * @param card an instance of Card to add to the hand
      */
     add(card) {
-        this.#cards.push(card);
+        this._cards.push(card);
     }
 
     /**
      * Sorts the hand in ascending order by card value
      */
     sort() {
-        this.#cards.sort(Card.compare);
+        this._cards.sort(Card.compare);
     }
 
     get cards() {
-        return this.#cards;
+        return this._cards;
     }
 
     toString() {
-        return this.cards();
+        let result = "";
+        this._cards.forEach(card => result += card.toString() + " ");
+        return result;
     }
 
     /**
@@ -46,13 +47,14 @@ class Hand {
         this.sort(); // Make sure cards are in sorted order
 
         let score = 0;
+        let result = {};
 
         // Get all the card face values in one array, suits in another
         let faces = [];
-        this.cards().forEach(card => faces.push(card.value()));
+        this._cards.forEach(card => faces.push(card._face));
 
         let suits = [];
-        this.cards().forEach(card => suits.push(card.suit()));
+        this._cards.forEach(card => suits.push(card._suit));
 
         // If every element of suits is the same it's a flush
         let isFlush = suits.every(suit => suit === suits[0]);
@@ -75,55 +77,60 @@ class Hand {
                 isStraight = true
             }
             // Ace can be low in a straight
-            else if (faces.includes(14) && (faces[0] === 2)) {
+            else if (faces.includes(14) && (faces[3] === 5)) {
                 isStraight = true;
             }
             else if (!isFlush) { // No straight, no flush, no pairs, so high card
-                let rank = "High Card: " + this.#cards[this.#cards.length - 1].toString();
+                let rank = "High Card: " + this._cards[this.cards.length - 1].toString();
                 score = faces[faces.length - 1];
                 return [rank, score];
             }
         }
         else if (pairs.size === 4) { // Single pair
-            pairs.forEach(face => {
-                if (pairs.get(face) === 2) {
-                    let card = this.#cards.find(card => card.face() === face);
-                    let rank = "Pair of " + card.toString() + "s";
-                    return [rank, 100 + face];
+
+            pairs.forEach((count, face) => {
+                if (count === 2) {
+
+                    result = ["Pair of " + Card.translate(face) + "s", 100 + face];
                 }
-            })
+            });
+            return result;
         }
         else if (pairs.size === 3) { // 3 of a kind or two pair
-            let rank = "Two Pair: "; // Will be discarded if we hit 3 of a kind
-            pairs.forEach( face => {
-                if (pairs.get(face) === 3) { // Must be 3 of a kind, calculate and return
-                    let card = this.#cards.find(card => card.face() === face);
-                    let rank = "Three of a kind: " + card.toString() + "s";
-                    return [rank, 300 + face];
+            let paired = [];
+            pairs.forEach( (count, face) => {
+                if (count === 3) { // Three of a kind
+                    result = ["Three of a kind: " + Card.translate(face) + "s", 300 + face];
                 }
-                else if (pairs.get(face) === 2) { // Keep looping to get the other card
-                    score += 100 + face; // will run twice so score is halved
-                    let card = this.#cards.find(card => card.face() === face);
-                    rank += card.toString() + "s ";
+                else if (count === 2) { // Need to grab both cards and assemble result later
+                    paired.push(face);
                 }
             });
-            return [rank, score]; // For two pair
+
+            if (paired.length > 0) {
+                result = ["Two pair: " + Card.translate(paired[0]) + "s and " +
+                    Card.translate(paired[1]) + "s",200 + paired[0] + paired[1]];
+            }
+
+            return result;
         }
         else if (pairs.size === 2) { // Full house or 4 of a kind, same algorithm as above
-            let rank = "Full house: ";
-            pairs.forEach( face => {
-                if (pairs.get(face) === 4) {
-                    let card = this.#cards.find(card => card.face() === face);
-                    let rank = "Four of a kind: " + card.toString() + "s";
-                    return [rank, 700 + face];
+            let paired = [];
+            pairs.forEach( (count, face) => {
+                if (count === 4) {
+                    result = ["Four of a kind: " + Card.translate(face) + "s", 700 + face];
                 }
-                else if ((pairs.get(face) === 3) || (pairs.get(face) === 2)) {
-                    score += 300 + face;
-                    let card = this.#cards.find(card => card.face() === face);
-                    rank += card.toString() + "s ";
+                else if (count === 3 || (count === 2)) {
+                    paired.push(face);
                 }
             });
-            return [rank, score]; // For two pair
+
+            if (paired.length > 0) {
+                result = ["Full house: " + Card.translate(paired[0]) + "s and " +
+                    Card.translate(paired[1]) + "s",600 + paired[0] + paired[1]];
+            }
+
+            return result;
         }
 
         // Handle straights and flushes
@@ -143,7 +150,7 @@ class Hand {
         }
         else if (isStraight) {
             score = 400 + faces[faces.length - 1];
-            return ["Flush!", score];
+            return ["Straight!", score];
         }
     }
 
