@@ -2,14 +2,16 @@
  * Runs test on manually-inputted string representing a hand of cards from the html page
  */
 function manualTests() {
+    let error = document.getElementById("error");
     let handInput = document.getElementById("cardInput").value;
-    let handResult = document.getElementById("hand");
     let rankScore = document.getElementById("result");
+
+    reset();
 
     let hand = createHandFromString(handInput);
 
     if (!hand) {
-        handResult.innerText = "Invalid input";
+        error.innerText = "Invalid input";
         return;
     }
 
@@ -34,11 +36,29 @@ function manualTests() {
 }
 
 /**
+ * Resets page to initial conditions
+ */
+function reset() {
+    let error = document.getElementById("error");
+    let rankScore = document.getElementById("result");
+
+    error.innerText = "";
+    rankScore.innerText = "";
+
+    for (let i = 1; i <= 5; i++) {
+        let imgElement = document.getElementById("card" + i);
+        imgElement.src = "../cards/blue_back.png";
+    }
+}
+
+/**
  * Creates and shuffles a deck, deals a hand, and evaluates it. Result printed to html page
  */
 function randomTests() {
     let deck = new Deck();
     let rankScore = document.getElementById("result");
+
+    reset();
 
     deck.shuffle();
     let hand = deck.deal(5);
