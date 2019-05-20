@@ -105,11 +105,12 @@ class Hand {
                 else if (count === 2) { // Need to grab both cards and assemble result later
                     paired.push(face);
                 }
+                score += face; // two players could have the same two pair so total all cards for score
             });
 
             if (paired.length > 0) {
                 result = ["Two pair: " + Card.translate(paired[0]) + "s and " +
-                    Card.translate(paired[1]) + "s",200 + paired[0] + paired[1]];
+                    Card.translate(paired[1]) + "s",200 + score];
             }
 
             return result;
