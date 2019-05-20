@@ -24,12 +24,14 @@ class Hand {
 
     toString() {
         let result = "";
-        this._cards.forEach(card => result += card.toString() + " ");
+        this._cards.forEach(card => result += card.toString() + " | ");
+        result = result.slice(0, -3);
         return result;
     }
 
     /**
-     * Evaluates the Hand object. Score is determined in the following manner:
+     * Evaluates the Hand object for a 5 card hand dealt from a single, legal deck of 52 cards (no jokers).
+     *  Score is determined in the following manner:
      *  Straight Flush: 800 points + value of highest card
      *  4 of a kind: 700 points plus value of the card
      *  Full House: 600 points plus the combined values of the paired cards
@@ -87,10 +89,8 @@ class Hand {
             }
         }
         else if (pairs.size === 4) { // Single pair
-
             pairs.forEach((count, face) => {
                 if (count === 2) {
-
                     result = ["Pair of " + Card.translate(face) + "s", 100 + face];
                 }
             });
