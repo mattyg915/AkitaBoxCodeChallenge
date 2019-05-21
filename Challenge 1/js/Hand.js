@@ -133,6 +133,12 @@ class Hand {
 
             return result;
         }
+        /**
+         * 5 of a kind, not supported as only possible with wild cards larger deck than 52
+         */
+        else if (pairs.size === 1) {
+            return ["Five of a kind!? You got anything else up your sleeve?", 0];
+        }
 
         // Handle straights and flushes
         if (isStraight && isFlush) {
