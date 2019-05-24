@@ -1,6 +1,3 @@
-# AkitaBoxCodeChallenge
-<h1>Coding challenges for AkitaBox interview</h1>
-
 <h2>Poker Hand Evaluator</h2>
 Assumptions/caveats:
 <ul>
